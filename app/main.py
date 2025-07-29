@@ -4,11 +4,16 @@ from typing import List, Union
 class Animal:
     alive: List["Animal"] = []
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, health: int = 100) -> None:
+        if health < 0:
+            raise ValueError("Health cannot be negative")
+
         self.name: str = name
-        self.health: int = 100
+        self.health: int = health
         self.hidden: bool = False
-        Animal.alive.append(self)
+
+        if self.health > 0:
+            Animal.alive.append(self)
 
     def _check_health(self) -> None:
         if self.health <= 0 and self in Animal.alive:
